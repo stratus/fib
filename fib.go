@@ -11,7 +11,7 @@ var (
 )
 
 func cachedFib(x int) int {
-        if len(cachedEntries) > x {
+        if x < len(cachedEntries) {
                 return cachedEntries[x]
         }
         f := fib(x)
@@ -23,13 +23,10 @@ func fib(x int) int {
         if x == 0 || x == 1 {
                 return 1
         }
-        var f int
-        if !*useCache {
-                f = fib(x-1) + fib(x-2)
-        } else {
-                f = cachedFib(x-1) + cachedFib(x-2)
+        if *useCache {
+                return cachedFib(x-1) + cachedFib(x-2)
         }
-        return f
+        return fib(x-1) + fib(x-2)
 }
 
 func main() {
